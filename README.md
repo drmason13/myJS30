@@ -50,6 +50,27 @@ I've never used floats or negative margins and I certainly don't intend to start
 Learn about four important array functions: filter(), map(), sort() & reduce()
 This one was basically a textbook exercise and I did learn a few things and solidified my understanding of these important functions. Much less likely to fallback to a for loop without good reason now. reduce is particularly impressive!
 
+### a fix:
+Was getting horrendously confused when all of my best laid plans appeared to be failing utterly...
+What happened?
+
+The "new" array variables I made all referenced the same array!
+I don't know how Wes Bos' testing and logging setup works exactly (a nice live preview for sure!) but he didn't appear to have any trouble.
+
+The solution:
+
+You might want to read [this](http://stackoverflow.com/questions/13166884/shallow-copy-for-arrays-why-cant-simply-do-newarr-oldarr) and [this](http://stackoverflow.com/questions/3978492/javascript-fastest-way-to-duplicate-an-array-slice-vs-for-loop) for the full breakdown but basically:
+
+copy your arrays before sorting.
+oldArray.slice(0) is a decent way of doing this
+oldArray.concat() also does this.
+These functions return new arrays with the same contents as oldArray
+
+if you do this:
+var newArray = oldArray, there is only one array (oldArray), and two variables point to it. Changing either variable changes that single array which often isn't what you want.
+
+It gets more complicated with objects inside arrays, best read up on that yourself.
+
 ### the twist:
 I noticed there was a spare "flavours" array in the starter file, so I did a little something with that.
 
