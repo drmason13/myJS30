@@ -133,21 +133,16 @@
 
     function advancePanel(byHowMany) {
       var currentFocus = document.querySelector('.focused');
-      if (currentFocus) { currentFocus.classList.remove('focused'); } else { $('panel0').classList.add('focused'); return; }
+      if (currentFocus) { currentFocus.classList.remove('focused'); } else { document.querySelector('.panel0').classList.add('focused'); return; }
       var newFocus = document.querySelector(`.panel${(parseInt(currentFocus.dataset.panelId) + byHowMany) % totalPanels}`);
       newFocus.classList.toggle('focused');
     }
 
     panelsEach.forEach((panel) => {
       panel.addEventListener('click', function() {
-      var currentFocus = document.querySelector('.focused');
-      if (currentFocus) { currentFocus.classList.remove('focused'); }
-        this.classList.toggle('focused');
-      });
-      panel.addEventListener('transitionend', function(event) {
-        if (event.propertyName === 'flex' || event.propertyName === 'flex-grow') {
-
-        }
+        var currentFocus = document.querySelector('.focused');
+        this.classList.add('focused');
+        if (currentFocus) { currentFocus.classList.remove('focused'); }
       });
     });
 
@@ -155,12 +150,15 @@
       switch (e.keyCode) {
         case 38:
         case 37:
-          advancePanel(totalPanels - 1);
+          advancePanel(totalPanels - 1); //left (or up)
         break;
         case 39:
         case 40:
-          advancePanel(1);
+          advancePanel(1); //right (or down)
         break;
+        case 27: //esc
+          var focus = document.querySelector('.focused');
+          if (focus) { focus.classList.remove('focused'); }
         default:
         break;
       }
