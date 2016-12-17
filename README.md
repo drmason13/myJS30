@@ -90,3 +90,15 @@ But I have finally put together the working page, plus some sorting by how soon 
 I did get waylaid by javascript closures, *this*, arrow functions and the difficulty of getting them all straight in my head. Despite the lack of work appearing here, I feel like I'm making good progress understanding them.
 
 I wrote a quick little "[playground](https://github.com/drmason13/closurePlayground)" which helped me get a practical feel for them. (If you do take a look, everything happens in the console, so glance through client.js, open up dev tools and get typing). I think it is worth making your own if you aren't sure how they work or if [these](http://stackoverflow.com/questions/111102/how-do-javascript-closures-work?rq=1) answers scare/confuse you. [This](http://nathansjslessons.appspot.com/) is also good to practice.
+
+### day 7: More Arrays
+
+Sort of skipped this one. I get the functions and completed the challenge but the answers were already in the starter file? Oops!
+Waaay more excited about the next day with HTML canvas!
+
+##day8: [HTMLscratchCanvas](https://github.com/drmason13/myJS30/tree/master/HTMLscratchCanvas)
+
+I have never used the canvas element before, always assuming it would be too complicated and not capable of much but I was pleasantly surprised. It takes getting used to but the built in functionality is powerful and with some imagination (and restraint) could add something special to your web pages.
+
+...Whilst I wait for inspiration I made a simple scratch card game. Can you win three pots of gold!?
+ - this was actually really good practice of flexbox, with some absolute positioning thrown in the mix.
