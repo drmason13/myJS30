@@ -70,7 +70,7 @@ menu.crunch= [Black Raspberry Crunch]
 I can see it being useful if you had to dynamically build some dropdown lists that let you filter some selection.
 I hope to come back to this and throw together a quick ice cream parlour online ordering with these flavours after learning some more tips and tricks. Ideally with people being able to design their own flavours and those getting thrown in :)
 
-## day 5: [flexPanels!](https://github.com/drmason13/myJS30/tree/master/flexPanels)
+## day 5: [flexPanels](https://github.com/drmason13/myJS30/tree/master/flexPanels)
 
 I love flexbox! So using it to animate a web page was a joy. Very cool idea and like flexbox should be, so simple. The magic is in classes and CSS transitions.
 
@@ -78,7 +78,8 @@ If you're still not convinced by Flexbox, [this](https://css-tricks.com/dont-ove
 
 Didn't feel like this one needed much more. I added controls for the arrow keys which loop round with a touch of modulo arithmetic. Short but sweet :)
 
-## day 6: [ajaxFuzzyFinder!](https://github.com/drmason13/myJS30/tree/master/ajaxFuzzyFinder)
+## day 6: [ajaxFuzzyFinder](https://github.com/drmason13/myJS30/tree/master/AjaxFuzzyFinder)
+
 
 Excellent to see the fetch api, it's certainly more friendly than xmlHttpRequest!
 
