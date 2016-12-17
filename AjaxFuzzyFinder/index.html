@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <form class="search-form">
+  <form class="search-form" onsubmit="return false">
     <input type="text" class="search" placeholder="City or State">
     <ul class="suggestions">
       <li>Filter for a city</li>
@@ -15,6 +15,7 @@
   </form>
 <div class="sidebar">
   <ul class="result result-data">
+    <li>Hit enter (or click on) a place for more detailed info</li>
   </ul>
 </div>
   <script>
@@ -31,7 +32,7 @@ fetch(endpoint)
 // the result of the json method is a response with a body of useable data
   .then(data => {
     fuzzyFinder['data'].push(...data);
-    fuzzyFinder.readyData();
+    fuzzyFinder.readyData(); // this causes fuzzyFinder to map it's data to leanData for faster matching (ALWAYS REQUIRED)
   }); // now we can store the data
 
 function FuzzyFinder(input, output, filterFunction, dataByRef) {
@@ -44,8 +45,12 @@ function FuzzyFinder(input, output, filterFunction, dataByRef) {
   this.history = undefined;
   this.regex = undefined;
   this.searchTerm = undefined;
-  this.suggestionIndex = 0;
-  this.suggestions = undefined;
+  this.selection = {
+    index: 0,
+    id: undefined,
+    data: undefined,
+    active: false
+  };
 
   if (dataByRef) {
     this.data = dataByRef;
@@ -61,6 +66,38 @@ function FuzzyFinder(input, output, filterFunction, dataByRef) {
         id: each.rank - 1
       }
     });
+
+    this.tempData = this.leanData;
+    this.selectionFunction = function(tempData) {
+      // this refers to *this* (fuzzyFinder), tempData refers to this.tempData
+      if (this.selection.index >= tempData.length) {
+        this.selection.index = tempData.length - 1;
+      }
+      const selectionTempData = tempData[this.selection.index];
+      this.selection.id = selectionTempData.id;
+      this.selection.data = this.data[this.selection.id];
+    }
+  }
+
+  this.displayResult = function(selection){
+    console.log(selection);
+    const resultTarget = document.querySelector('.result-data');
+    const result = [];
+    for (property in selection.data) {
+      console.log(`<li>${property}: ${selection.data[property]}</li>`);
+      console.log(property);
+      result.push(`
+        <li>${property}: <span class="hl">${selection.data[property]}</span></li>
+      `);
+    }
+    console.log(result);
+    console.log(resultTarget);
+    resultTarget.innerHTML = result.join('')
+  }
+
+  this.highlightSelection = function(each, index) {
+    if (index === this.selection.index) { return 'selected'; }
+    else { return ''; }
   }
 
   if (filterFunction) {
@@ -75,9 +112,9 @@ function FuzzyFinder(input, output, filterFunction, dataByRef) {
     return itemA.place.indexOf(this.searchTerm) - itemB.place.indexOf(this.searchTerm)
   }
 
-  this.renderMapping = function(each) {
+  this.renderMapping = function(each, index) {
       return `
-        <li>
+        <li data-index=${index} data-id=${each.id} class=${this.highlightSelection(each, index)}>
           <span class="name">
             ${each.place.replace(this.regex, '<span class="hl">$&</span>')}
           </span>
@@ -88,56 +125,69 @@ function FuzzyFinder(input, output, filterFunction, dataByRef) {
 
   this.update = function(e) {
     // define search term according to value of input
-    if (!input.value) {
-      output.innerHTML = `
+    if (!this.input.value) {
+      this.output.innerHTML = `
         <li>Filter for a city</li>
         <li>or a state</li>
       `;
-      try { suggestions[suggestionIndex].classList.remove('selected'); }
-      catch(err) { console.error(err); }
+      this.selection.index = 0;
       return
     }
     this.searchTerm = this.input.value.toLowerCase();
-    this.regex = new RegExp(this.searchTerm, "ig");
+    try { this.regex = new RegExp(this.searchTerm, "ig"); }
+    catch(err) {
+      this.output.innerHTML = `
+        <li class="warning">No items match your search</li>
+      `;
+      this.selection.index = 0;
+      return
+    }
 
     // perform search and display result
     this.tempData = this.leanData
-
       .filter(this.filterFunction.bind(this))
+      .sort(this.sortFunction.bind(this));
 
-      .sort(this.sortFunction.bind(this))
-
-      .map(this.renderMapping.bind(this)).join('');
-
-    output.innerHTML = this.tempData;
-
-    this.suggestions = document.getElementsByClassName('selected');
+    this.render();
   };
 
-  this.displaySelected = function(){
-    // find selection
-    // send to displayResult
+  this.render = function() {
+    if(this.tempData.length === 0) {
+      this.output.innerHTML = `
+        <li class="warning">No items match your search</li>
+      `;
+      this.selection.index = 0;
+      return
+    }
+    this.selectionFunction.bind(this)(this.tempData);
 
-  }
+    this.output.innerHTML = this.tempData
+      .map(this.renderMapping.bind(this)).join('');
+  };
 
   // one off creation of event listener for input
-  input.addEventListener('keyup', (e) => {
-    // check for enter press
+  this.input.addEventListener('keyup', (e) => {
+    e.preventDefault();
+    // check for enter press - "submit" selection
     if (e.which === 13) {
       // enter - display selected result
-      const selected = this.suggestions[this.suggestionIndex]
-
+      this.displayResult(this.selection);
     } else
-    // check for enter press
     if (e.which === 40) {
       // down - select next suggestion
-
+      this.selection.index++;
+      this.render();
     } else
-    // check for enter press
     if (e.which === 38) {
       // down - display selected result
+      this.selection.index--;
+      this.render();
+    } else {
+      // update the fuzzyFinder (will call render)
+      this.update.bind(this)();
 
-    } else { this.update.bind(this)(); }
+    }
+    return false;
   })
 }
   </script>
