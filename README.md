@@ -78,4 +78,14 @@ If you're still not convinced by Flexbox, [this](https://css-tricks.com/dont-ove
 
 Didn't feel like this one needed much more. I added controls for the arrow keys which loop round with a touch of modulo arithmetic. Short but sweet :)
 
-## day 6: is tomorrow! see you then
+## day 6: [ajaxFuzzyFinder!](https://github.com/drmason13/myJS30/tree/master/ajaxFuzzyFinder)
+
+Excellent to see the fetch api, it's certainly more friendly than xmlHttpRequest!
+
+This one turned out to be surprisingly tough for me, especially when adding my own features. I had a lot of trouble with arrow functions vs normal functions and then using *this*
+
+But I have finally put together the working page, plus some sorting by how soon your match appears in the place. More little tweaks than usual as well, including creating a "lean" dataset to use for displaying the matches. It sped up a lot after that, and felt nice and snappy; plus thanks to css capitalize, there was no need to map back for displaying purposes
+
+I did get waylaid by javascript closures, *this*, arrow functions and the difficulty of getting them all straight in my head. Despite the lack of work appearing here, I feel like I'm making good progress understanding them.
+
+I wrote a quick little "[playground](https://github.com/drmason13/closurePlayground)" which helped me get a practical feel for them. (If you do take a look, everything happens in the console, so glance through client.js, open up dev tools and get typing). I think it is worth making your own if you aren't sure how they work or if [these](http://stackoverflow.com/questions/111102/how-do-javascript-closures-work?rq=1) answers scare/confuse you. [This](http://nathansjslessons.appspot.com/) is also good to practice.
