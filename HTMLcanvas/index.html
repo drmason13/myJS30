@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas</title>
+</head>
+<body>
+<canvas id="draw" width="800" height="800" style="position: absolute; z-index: 1"></canvas>
+  <div class="scratch-prizes">
+    <div class="scratch-back"><img src=""></div>
+    <div class="scratch-back"><img src=""></div>
+    <div class="scratch-back"><img src=""></div>
+  </div>
+<button id="reset">Play Again</button>
+<script>
+  // ready canvas, context and drawing variables
+  const canvas = document.getElementById('draw');
+  const ctx = canvas.getContext('2d');
+  [canvas.width, canvas.height] = [window.innerWidth, window.innerHeight];
+  [ctx.strokeStyle, ctx.lineJoin, ctx.lineCap, ctx.lineWidth] = ['black', 'round', 'round', 50];
+  let isDrawing = false;
+  let [lastX, lastY] = [0, 0];
+
+  // prizes array for the game
+  const prizes = ["choc.png", "gold.png", "shoe.png"];
+  const prizesTargetArray = Array.from(document.getElementsByTagName("img"))
+
+  // gradient made
+  let gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+  gradient.addColorStop(0,"gray");
+  gradient.addColorStop(1,"white");
+  ctx.fillStyle = gradient;
+
+  // loads images, draws rectangles
+  resetGame();
+
+  // Function Definitions
+  // resets (or starts) the game, draws rectangles, randomises prizes, loads images
+  function resetGame() {
+    ctx.globalCompositeOperation="source-over"; // drawing set to default (draw on top)
+    drawScratchCards();
+    readyPrizes();
+    ctx.globalCompositeOperation="destination-out"; // set back to "eraser mode"
+  }
+
+  // randomise scratch-prizes
+  function randomPrizeIndex() { return Math.floor((Math.random() * 3)); }
+
+  function readyPrizes() {
+    prizesTargetArray.forEach(function(img) {
+      img.setAttribute("src", prizes[randomPrizeIndex()]);
+    });
+  }
+
+  // draw rectangles to cover images
+  function drawScratchCards() {
+    if (canvas.width > canvas.height) {
+      ctx.fillRect(canvas.width / 24, canvas.height / 4, canvas.width / 4, canvas.height / 2);
+      ctx.fillRect(9 * canvas.width / 24, canvas.height / 4, canvas.width / 4, canvas.height / 2);
+      ctx.fillRect(17 * canvas.width / 24, canvas.height / 4, canvas.width / 4, canvas.height / 2);
+    } else {
+      ctx.fillRect(canvas.width / 4, canvas.height / 24, canvas.width / 2, canvas.height / 4);
+      ctx.fillRect(canvas.width / 4, 9 * canvas.height / 24, canvas.width / 2, canvas.height / 4);
+      ctx.fillRect(canvas.width / 4, 17 * canvas.height / 24, canvas.width / 2, canvas.height / 4);
+    }
+  }
+
+  // drawing logic
+  function draw(startX, startY, endX, endY) {
+    ctx.beginPath();
+    ctx.moveTo(startX, startY);
+    ctx.lineTo(endX, endY);
+    ctx.stroke();
+    [lastX, lastY] = [endX, endY];
+  }
+
+  // event listeners
+  window.addEventListener('mousemove', e => { if (!isDrawing) return; draw(lastX, lastY, e.pageX, e.pageY) });
+  window.addEventListener('mousedown', e => { isDrawing = true; [lastX, lastY] = [e.pageX, e.pageY]; });
+  window.addEventListener('mouseup', e => { isDrawing = false; draw(lastX, lastY, lastX, lastY); }); // draw point on click
+  window.addEventListener('mouseleave', e => { isDrawing = false; });
+  document.getElementById('reset').addEventListener('click', resetGame);
+</script>
+
+<style>
+  html, main, body, canvas {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  button {
+    position:absolute;
+    z-index: 1;
+    top: calc(100% - 60px);
+    left: 30px;
+  }
+
+  .scratch-prizes {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+  }
+
+  .scratch-back {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(100vmin / 3);
+    height: calc(100vmax / 4);
+    padding: calc(100vmax / 24) 0px;
+  }
+  img {
+    flex: 1 1 auto;
+  }
+  @media screen and (orientation: landscape) {
+    .scratch-prizes {
+      flex-flow: row;
+    }
+    .scratch-back {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: calc(100vmax / 4);
+      height: calc(100vmin / 3);
+      padding: 0px calc(100vmax / 24);
+    }
+  }
+</style>
+
+</body>
+</html>
