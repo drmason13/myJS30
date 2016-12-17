@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Type Ahead 👀</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <form class="search-form">
+    <input type="text" class="search" placeholder="City or State">
+    <ul class="suggestions">
+      <li>Filter for a city</li>
+      <li>or a state</li>
+    </ul>
+  </form>
+<div class="sidebar">
+  <ul class="result result-data">
+  </ul>
+</div>
+  <script>
+const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+
+// prepare a fuzzyFinder for our data
+const fuzzyFinder = new FuzzyFinder(document.querySelector('.search'), document.querySelector('.suggestions'));
+
+// fetch and populate the data to be searched
+fetch(endpoint)
+// fetch returns a promise
+// the promise gives an object with a json method, we return the result of that method
+  .then(function(blob) {return blob.json();})
+// the result of the json method is a response with a body of useable data
+  .then(data => {
+    fuzzyFinder['data'].push(...data);
+    fuzzyFinder.readyData();
+  }); // now we can store the data
+
+function FuzzyFinder(input, output, filterFunction, dataByRef) {
+  /* constructor -> obj
+  Returns an object containing all the variables and functions
+  required to...
+  */
+  this.input = input;
+  this.output = output;
+  this.history = undefined;
+  this.regex = undefined;
+  this.searchTerm = undefined;
+  this.suggestionIndex = 0;
+  this.suggestions = undefined;
+
+  if (dataByRef) {
+    this.data = dataByRef;
+  } else {
+    this.data = []
+  }
+
+  this.readyData = function() {
+    this.leanData = this.data.map(function(each) {
+      return {
+        place: `${each.city.toLowerCase()}, ${each.state.toLowerCase()}`,
+        population: each.population,
+        id: each.rank - 1
+      }
+    });
+  }
+
+  if (filterFunction) {
+    this.filterFunction = filterFunction;
+  } else {
+    this.filterFunction = function(item) {
+      return this.regex.test(item.place)
+    }
+  }
+
+  this.sortFunction = function(itemA, itemB) {
+    return itemA.place.indexOf(this.searchTerm) - itemB.place.indexOf(this.searchTerm)
+  }
+
+  this.renderMapping = function(each) {
+      return `
+        <li>
+          <span class="name">
+            ${each.place.replace(this.regex, '<span class="hl">$&</span>')}
+          </span>
+          <span class="population">${each.population}</span>
+        </li>
+      `;
+    }
+
+  this.update = function(e) {
+    // define search term according to value of input
+    if (!input.value) {
+      output.innerHTML = `
+        <li>Filter for a city</li>
+        <li>or a state</li>
+      `;
+      try { suggestions[suggestionIndex].classList.remove('selected'); }
+      catch(err) { console.error(err); }
+      return
+    }
+    this.searchTerm = this.input.value.toLowerCase();
+    this.regex = new RegExp(this.searchTerm, "ig");
+
+    // perform search and display result
+    this.tempData = this.leanData
+
+      .filter(this.filterFunction.bind(this))
+
+      .sort(this.sortFunction.bind(this))
+
+      .map(this.renderMapping.bind(this)).join('');
+
+    output.innerHTML = this.tempData;
+
+    this.suggestions = document.getElementsByClassName('selected');
+  };
+
+  this.displaySelected = function(){
+    // find selection
+    // send to displayResult
+
+  }
+
+  // one off creation of event listener for input
+  input.addEventListener('keyup', (e) => {
+    // check for enter press
+    if (e.which === 13) {
+      // enter - display selected result
+      const selected = this.suggestions[this.suggestionIndex]
+
+    } else
+    // check for enter press
+    if (e.which === 40) {
+      // down - select next suggestion
+
+    } else
+    // check for enter press
+    if (e.which === 38) {
+      // down - display selected result
+
+    } else { this.update.bind(this)(); }
+  })
+}
+  </script>
+  </body>
+</html>
