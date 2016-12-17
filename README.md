@@ -96,7 +96,7 @@ I wrote a quick little "[playground](https://github.com/drmason13/closurePlaygro
 Sort of skipped this one. I get the functions and completed the challenge but the answers were already in the starter file? Oops!
 Waaay more excited about the next day with HTML canvas!
 
-##day8: [HTMLscratchCanvas](https://github.com/drmason13/myJS30/tree/master/HTMLscratchCanvas)
+## day 8: [HTMLscratchCanvas](https://github.com/drmason13/myJS30/tree/master/HTMLcanvas)
 
 I have never used the canvas element before, always assuming it would be too complicated and not capable of much but I was pleasantly surprised. It takes getting used to but the built in functionality is powerful and with some imagination (and restraint) could add something special to your web pages.
 
