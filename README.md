@@ -95,14 +95,6 @@ I wrote a quick little "[playground](https://github.com/drmason13/closurePlaygro
 Sort of skipped this one. I get the functions and completed the challenge but the answers were already in the starter file? Oops!
 Waaay more excited about the next day with HTML canvas!
 
-<<<<<<< HEAD
-## day 8: [HTMLscratchCanvas](https://github.com/drmason13/myJS30/tree/master/HTMLcanvas)
-
-I have never used the canvas element before, always assuming it would be too complicated and not capable of much but I was pleasantly surprised. It takes getting used to but the built in functionality is powerful and with some imagination (and restraint) could add something special to your web pages.
-
-...Whilst I wait for inspiration I made a simple scratch card game. Can you win three pots of gold!?
- - this was actually really good practice of flexbox, with some absolute positioning thrown in the mix.
-=======
 ## day8: [HTMLscratchCanvas](https://github.com/drmason13/myJS30/tree/master/HTMLscratchCanvas)
 
 I have never used the canvas element before, always assuming it would be too complicated and not capable of much but I was pleasantly surprised. It takes getting used to but the built in functionality is powerful and with some imagination (and restraint) could add something special to your web pages.
@@ -110,17 +102,16 @@ I have never used the canvas element before, always assuming it would be too com
 ...Whilst I wait for inspiration I made a simple [scratch card game](myjs30.surge.sh). Can you win three pots of gold!?
  - this was actually really good practice of flexbox, with some absolute positioning thrown in the mix.
  
- ### day 9: ChromeDevTools Tricks
- 
- ## day 10: [checkbox](https://github.com/drmason13/myJS30/tree/master/checkbox)
- 
- ### base project
- 
- Get the checkboxes in between check when you shift-click a lower (or higher) checkbox
- 
- ### the twist
- 
- More controls! Check, uncheck or toggle multiple checkboxes based on modifier key pressed (shift, ctrl or both).
- 
- Aimed to be intuitive and user friendly (toggling is inherently confusing... but the option is there if you want!)
->>>>>>> day 10 twist: more controls for checkboxes. set, unset and toggle. Original solution.
+### day 9: ChromeDevTools Tricks
+
+## day 10: [checkbox](https://github.com/drmason13/myJS30/tree/master/checkbox)
+
+### base project
+
+Get the checkboxes in between check when you shift-click a lower (or higher) checkbox
+
+### the twist
+
+More controls! Check, uncheck or toggle multiple checkboxes based on modifier key pressed (shift, ctrl or both).
+
+Aimed to be intuitive and user friendly (toggling is inherently confusing... but the option is there if you want!)
