@@ -115,3 +115,5 @@ Get the checkboxes in between check when you shift-click a lower (or higher) che
 More controls! Check, uncheck or toggle multiple checkboxes based on modifier key pressed (shift, ctrl or both).
 
 Aimed to be intuitive and user friendly (toggling is inherently confusing... but the option is there if you want!)
+
+Try the live [demo](myjs30-checkbox.surge.sh) and see for yourself.
