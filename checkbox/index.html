@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <style>
+
+    html {
+      font-family: sans-serif;
+      background:#ffc600;
+    }
+
+    .inbox {
+      max-width:400px;
+      margin:50px auto;
+      background:white;
+      border-radius:5px;
+      box-shadow:10px 10px 0 rgba(0,0,0,0.1);
+    }
+
+    .item {
+      display:flex;
+      align-items:center;
+      border-bottom: 1px solid #F1F1F1;
+    }
+
+    .item:last-child {
+      border-bottom:0;
+    }
+
+
+    input:checked + p {
+      background:#F9F9F9;
+      text-decoration: line-through;
+    }
+
+    input[type="checkbox"] {
+      margin:20px;
+    }
+
+    p {
+      margin:0;
+      padding:20px;
+      transition:background 0.2s;
+      flex:1;
+      font-family:'helvetica neue';
+      font-size: 20px;
+      font-weight: 200;
+      border-left: 1px solid #D1E2FF;
+    }
+
+    .details {
+      text-align: center;
+      font-size: 15px;
+    }
+
+    .hl {
+      background:#ffc600;
+    }
+
+  </style>
+   <!--
+   The following is a common layout you would see in an email client.
+
+   When a user clicks a checkbox, holds Shift, and then clicks another checkbox a few rows down, all the checkboxes inbetween those two checkboxes should be checked.
+
+  -->
+  <div class="inbox">
+    <div class="item">
+      <input type="checkbox">
+      <p>This is an inbox layout.</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Check one item</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Hold down your Shift key</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Check a lower item</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Everything inbetween should also be set to <span class="hl">checked</span></p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Hold ctrl to <span class="hl">uncheck</span> <span class="hl">everything</span></p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Hold ctrl + shift to <span class="hl">toggle</span> everything in between</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Enjoy!</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>This only uses regular JavaScript.<br/> No libraries</p>
+    </div>
+  </div>
+
+<script>
+  let shiftPressed = false;
+  let controlPressed = false;
+  let lastCheckedIndex = 0;
+
+  const checkboxes = Array.from(document.querySelectorAll("input[type='checkbox']"));
+
+  function check(startIndex, endIndex, mode) {
+    if (startIndex === undefined || endIndex === undefined) {
+      lastCheckedIndex = checkboxes.indexOf(this);
+      console.log(`lastCheckedIndex is now: ${lastCheckedIndex}`)
+      return;
+    }
+    for (let i = startIndex + 1; i < endIndex; i++) {
+      // default toggling prevented, toggle all desired boxes manually
+        console.log(i);
+      if (mode == 'toggle') {checkboxes[i].checked = !checkboxes[i].checked;}
+      else if (mode == 'check') {checkboxes[i].checked = true;}
+      else if (mode == 'uncheck') {checkboxes[i].checked = false;}
+      }
+    if (mode == 'check') {checkboxes[startIndex].checked = true; checkboxes[endIndex].checked = true}
+    if (mode == 'uncheck') {checkboxes[startIndex].checked = false; checkboxes[endIndex].checked = false}
+  }
+
+  function multiCheck(mode) {
+    let currentCheckedIndex = checkboxes.indexOf(this)
+    if (lastCheckedIndex < currentCheckedIndex) {
+      check(lastCheckedIndex, currentCheckedIndex, mode);
+
+      lastCheckedIndex = checkboxes.indexOf(this);
+      console.log(`lastCheckedIndex is now: ${lastCheckedIndex}`)
+      return;
+    }
+    if (lastCheckedIndex > currentCheckedIndex) {
+      // bottom to top
+      check(currentCheckedIndex, lastCheckedIndex, mode);
+
+      lastCheckedIndex = checkboxes.indexOf(this);
+      console.log(`lastCheckedIndex is now: ${lastCheckedIndex}`)
+      return;
+    }
+    if (lastCheckedIndex === currentCheckedIndex) {
+      // single check
+      check.bind(this)();
+      return;
+    }
+  }
+
+  checkboxes.forEach(each => {
+    each.addEventListener('click', function(e) {
+
+      if (!(shiftPressed || controlPressed)) { check.bind(this)(); return; };
+      if (shiftPressed && controlPressed) { multiCheck.bind(this)('toggle'); return; }
+      if (shiftPressed) { multiCheck.bind(this)('check'); return; }
+      if (controlPressed) { multiCheck.bind(this)('uncheck'); return; }
+
+    });
+  });
+
+  function handleModifiersDown(e){
+    switch (e.keyCode) {
+      case 16: { shiftPressed = true; return; break; }
+      case 17: { controlPressed = true; return; break; }
+      default: return;
+    }
+  }
+  function handleModifiersUp(e){
+    switch (e.keyCode) {
+      case 16: { shiftPressed = false; return; break; }
+      case 17: { controlPressed = false; return; break; }
+      default: return;
+    }
+  }
+
+  window.addEventListener('keydown', (e) => {
+    handleModifiersDown(e); console.log("ctrl?", controlPressed, "shift?", shiftPressed)
+  });
+  window.addEventListener('keyup', (e) => {
+    handleModifiersUp(e);
+  });
+</script>
+</body>
+</html>
