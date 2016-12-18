@@ -116,4 +116,4 @@ More controls! Check, uncheck or toggle multiple checkboxes based on modifier ke
 
 Aimed to be intuitive and user friendly (toggling is inherently confusing... but the option is there if you want!)
 
-Try the live [demo](myjs30-checkbox.surge.sh) and see for yourself.
+Try the live [demo](http://myjs30-checkbox.surge.sh) and see for yourself.
