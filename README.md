@@ -117,3 +117,15 @@ More controls! Check, uncheck or toggle multiple checkboxes based on modifier ke
 Aimed to be intuitive and user friendly (toggling is inherently confusing... but the option is there if you want!)
 
 Try the live [demo](http://myjs30-checkbox.surge.sh) and see for yourself.
+
+## day 11: [videoPlayer](https://github.com/drmason13/myJS30/tree/master/videoPlayer)
+
+### base project
+
+Add functionality to the styled video player. Scrubbing, volume, playback speed. Play/Pause on click of button or video itself. Nice usual features. Completely new to native video format in HTML but glad to see it is quite intuitive.
+
+### the twist
+
+Attempted fullscreen functionality - but the styling reverts to default! I wonder if there is a CSS selector for document.fullscreenElement?
+
+I also found testing (!e.buttons) was a good way to avoid firing event functions if the mouse isn't clicked. Feels neater to me than watching custom flags.
