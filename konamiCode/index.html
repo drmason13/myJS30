@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Key Detection</title>
+  <script type="text/javascript" src="http://www.cornify.com/js/cornify.js"></script>
+  <style>
+    body {
+      display: flex;
+      flex-flow: column;
+      justify-content: space-around;
+      align-items: center;
+    }
+    h2 {
+      text-align: center;
+      font-family: cursive;
+      z-index: 1;
+    }
+    .row {
+      display: flex;
+      width: 100%;
+      justify-content: space-around;
+    }
+  </style>
+</head>
+<body>
+  <div class="row">
+    <h2 class="typed">Guess the secret code!</h2>
+    <h2 class="hint">0</h2>
+  </div>
+  <button>Hard</button>
+<script>
+  var pressed = [];
+  let secret = [];
+  let easyMode = 0;
+  let matchesHighest = 0;
+  let button = document.querySelector('button');
+  let easyHint = "";
+  const buttonText = ["Hard",  "Easy"];
+  const typed = document.querySelector('.typed');
+  const hint = document.querySelector('.hint');
+
+  for (let i = 0; i < Math.floor(Math.random() * 2 + 3); i++) {
+    secret.push(String.fromCharCode(Math.floor(Math.random()*26 + 65)));
+  }
+
+  button.addEventListener('click', () => {
+    easyMode = 1 - easyMode;
+    button.textContent = buttonText[easyMode];
+    if (easyMode) {
+      easyHint = `/${secret.length}`;
+      typed.textContent = pressed.join('');
+    }
+    else { easyHint = ""; }
+  })
+
+  function showHint() {
+    let matches = 0;
+    for (index in pressed) {
+      if (pressed[index] == secret[index]) {
+        matches++;
+        if (matches > matchesHighest) {
+          matchesHighest = matches; cornify_add();
+        }
+      }
+    };
+    hint.textContent = matches + easyHint;
+    if (matches == secret.length) {
+      cornify_add();
+      typed.textContent = "HOORAY! YOU WIN :D";
+    }
+  }
+
+  window.addEventListener('keyup', e => {
+    console.log(e.keyCode);
+    console.log(String.fromCharCode(e.keyCode).toUpperCase());
+    pressed.push(String.fromCharCode(e.keyCode).toUpperCase());
+    pressed.splice(-secret.length - 1, pressed.length - secret.length);
+    if (easyMode) typed.textContent = pressed.join('');
+    showHint();
+  });
+</script>
+</body>
+</html>

@@ -129,3 +129,10 @@ Add functionality to the styled video player. Scrubbing, volume, playback speed.
 Attempted fullscreen functionality - but the styling reverts to default! I wonder if there is a CSS selector for document.fullscreenElement?
 
 I also found testing (!e.buttons) was a good way to avoid firing event functions if the mouse isn't clicked. Feels neater to me than watching custom flags.
+
+## day 12 [konamiCode](https://github.com/drmason13/myJS30/tree/master/konamiCode)
+
+Learn a simple trick for recording key strokes and matching a secret code.
+
+Nice, quick easy one today. Had a bit of fun making a game for this one. Guess the random code, with a little hint as you type.
+
