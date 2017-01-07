@@ -135,7 +135,80 @@ I hope to come back to this and throw together a quick ice cream parlour online 
 <p>Didn't feel like this one needed much more. I added controls for the arrow keys which loop round with a touch of modulo arithmetic. Short but sweet :)</p>
 
 <h2>
-<a id="day-6-is-tomorrow-see-you-then" class="anchor" href="#day-6-is-tomorrow-see-you-then" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>day 6: is tomorrow! see you then</h2>
+  <a id="day-6-ajaxFuzzyFinder" class="anchor" href="#day-6-ajaxFuzzyFinder" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>day 6: <a href="https://drmason13.github.io/ajaxFuzzyFinder30" target="_blank">ajaxFuzzyFinder</a></h2>
+
+<p>Excellent to see the fetch api, it's certainly more friendly than xmlHttpRequest!</p>
+
+<p>This one turned out to be surprisingly tough for me, especially when adding my own features. I had a lot of trouble with arrow functions vs normal functions and then using <em>this</em></p>
+
+<p>But I have finally put together the working page, plus some sorting by how soon your match appears in the place. More little tweaks than usual as well, including creating a "lean" dataset to use for displaying the matches. It sped up a lot after that, and felt nice and snappy; plus thanks to css capitalize, there was no need to map back for displaying purposes</p>
+
+<p>I did get waylaid by javascript closures, <em>this</em>, arrow functions and the difficulty of getting them all straight in my head. Despite the lack of work appearing here, I feel like I'm making good progress understanding them.</p>
+
+<p>I wrote a quick little <a href="https://github.com/drmason13/closurePlayground" target="_blank">"playground"</a> which helped me get a practical feel for them. (If you do take a look, everything happens in the console, so glance through client.js, open up dev tools and get typing). I think it is worth making your own if you aren't sure how they work or if <a href="http://stackoverflow.com/questions/111102/how-do-javascript-closures-work?rq=1" target="_blank">these</a> answers scare/confuse you. <a href="http://nathansjslessons.appspot.com/" target="_blank">This</a> is also good to practice.</p>
+
+<h2>
+<a id="day-7-moreArrays" class="anchor" href="#day-7-moreArrays" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>day 7: More Arrays</h2>
+
+<p>Sort of skipped this one. I get the functions and completed the challenge but the answers were already in the starter file? Oops!
+Waaay more excited about the next day with HTML canvas!</p>
+
+<h2>
+  <a id="day-8-HTMLscratchCanvas" class="anchor" href="#day-8-HTMLscratchCanvas" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>day 8: <a href="https://drmason13.github.io/HTMLcanvas30" target="_blank">HTMLscratchCanvas</a></h2>
+
+<p>I have never used the canvas element before, always assuming it would be too complicated and not capable of much but I was pleasantly surprised. It takes getting used to but the built in functionality is powerful. With imagination (and restraint) you could add something really special to your web pages.</p>
+
+<p>...Whilst I wait for inspiration I made a simple <a href="myjs30.surge.sh" target="_blank">scratch card game</a>.<br>Can you win three pots of gold!?
+ - this was actually really good practice of flexbox, with some absolute positioning thrown in the mix.</p>
+
+<h3>
+  <a id="day-9-ChromeDevTools-Tricks" class="anchor" href="#day-9-ChromeDevTools-Tricks" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>day 8: ChromeDevTools Tricks <small>(no live demo)</small></h3>
+
+<h2>
+  <a id="day-10-checkbox" class="anchor" href="#day-10-checkbox" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>day 8: <a href="https://drmason13.github.io/checkbox30" target="_blank">checkbox</a></h2>
+
+<h3>
+<a id="base-project-4" class="anchor" href="#base-project-4" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>base project:</h3>
+
+<p>Get the checkboxes in between check when you shift-click a lower (or higher) checkbox</p>
+
+<h3>
+<a id="the-twist-4" class="anchor" href="#the-twist-4" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>the twist:</h3>
+
+<p>More controls! Check, uncheck or toggle multiple checkboxes based on modifier key pressed (shift, ctrl or both).</p>
+
+<p>Aimed to be intuitive and user friendly (toggling is inherently confusing... but the option is there if you want!)</p>
+
+<p>Try the <a href="http://myjs30-checkbox.surge.sh" target="_blank">demo</a> and see for yourself.</p>
+
+<h2>
+  <a id="day-11-videoPlayer" class="anchor" href="#day-11-videoPlayer" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>day 8: <a href="https://drmason13.github.io/videoPlayer30" target="_blank">videoPlayer</a></h2>
+
+<h3>
+<a id="base-project-5" class="anchor" href="#base-project-5" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>base project:</h3>
+
+<p>Add functionality to the styled video player. Scrubbing, volume, playback speed. Play/Pause on click of button or video itself. Nice usual features. Completely new to native video format in HTML but glad to see it is quite intuitive.</p>
+
+<h3>
+<a id="the-twist-5" class="anchor" href="#the-twist-5" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>the twist:</h3>
+
+<p>Attempted fullscreen functionality - but the styling reverts to default! I wonder if there is a CSS selector for document.fullscreenElement?</p>
+
+<p>I also found testing (!e.buttons) was a good way to avoid firing event functions if the mouse isn't clicked. Feels neater to me than watching custom flags.</p>
+
+<h2>
+  <a id="day-11-videoPlayer" class="anchor" href="#day-11-videoPlayer" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>day 8: <a href="https://drmason13.github.io/videoPlayer30" target="_blank">videoPlayer</a></h2>
+
+<h3>
+<a id="base-project-6" class="anchor" href="#base-project-6" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>base project:</h3>
+
+<p>Learn a simple trick for recording key strokes and matching a secret code.</p>
+
+<p>Nice, quick easy one today. Had a bit of fun making a game for this one. Guess the random code, with a little hint as you type.</p>
+
+
+
+
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/drmason13/myJS30">myJS30</a> is maintained by <a href="https://github.com/drmason13">drmason13</a>.</span>
