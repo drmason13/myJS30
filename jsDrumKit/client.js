@@ -1,5 +1,5 @@
 function stopTransition() {
-  this.removeClass('playing');
+  this.classList.remove('playing');
 }
 
 function playSound(keycode) {
@@ -11,59 +11,44 @@ function playSound(keycode) {
   key.classList.add('playing');
 }
 
-function playSoundServer(e){
-  //prepares for generic playSound function which accepts raw keyCodes only
-  playSound(e.keyCode);
-}
-
-function stopTransition(){
-  this.classList.remove('playing');
-}
-
 // sequencer variables...
-var sequencer = document.querySelector('.sequence-keys');
+const sequencer = document.querySelector('.sequence-keys');
+const slider = document.querySelector('#slider');
+const sliderMinMax = Number(slider.min) + Number(slider.max);
+const loop = document.querySelector('#loop')
+const clear = document.querySelector('#clear');
+const play = document.querySelector('#play');
+const keys = document.querySelectorAll('.key');
 
 // beat object stores information about a beat
-// interval stores whatver object setInterval makes...
+// interval property stores the result of setInterval
 // defaults:
 var beat = {
-  speed: 20,
+  speed: 100,
   loop: false,
   sequence: undefined,
   interval: undefined
 };
 
 var keycodes = {
-  "a": 65,
-  "s": 83,
-  "d": 68,
-  "f": 70,
-  "g": 71,
-  "h": 72,
-  "j": 74,
-  "k": 75,
-  "l": 76
+  "a": 65,  "s": 83,  "d": 68,  "f": 70,  "g": 71,
+  "h": 72,  "j": 74,  "k": 75,  "l": 76
 }
+
 // functions!
 
 function readSequence() {
   // returns an iterable of "keys" to simulate pressing
-  var sequence = sequencer.value;
-  var keydownArray = [];
+  let sequence = sequencer.value;
+  let keydownArray = [];
   for (var i = 0; i < sequence.length; i++) {
     const curKeyCode = keycodes[sequence.charAt(i)]
-    if (curKeyCode) {
-      keydownArray.push(curKeyCode); }
-    else {
-      keydownArray.push(404); }
+    curKeyCode ? keydownArray.push(curKeyCode) : keydownArray.push(404);
   }
-  console.log("read array:");
-  console.log(keydownArray);
   return keydownArray;
 }
 
 function playbackSequence(loop) {
-  console.log(beat.loop);
   var currentKey = beat.sequence.shift();
   if (beat.loop) {
     beat.sequence.push(currentKey);
@@ -75,10 +60,10 @@ function playbackSequence(loop) {
 
 function playSequence() {
   // check checkbox to pass loop into setInterval
-  beat.loop = document.querySelector('#loop').checked;
+  beat.loop = loop.checked;
   // generates array of keycodes
   beat.sequence = readSequence();
-  beat.speed = document.querySelector('#slider').value;
+  beat.speed = sliderMinMax - slider.value;
   // kill current playback
   clearInterval(beat.interval);
   beat.interval = setInterval(playbackSequence, beat.speed);
@@ -87,28 +72,19 @@ function playSequence() {
 function adjustBeatSpeed(e) {
   // sliding slider adjusts current beat speed
   // set and reset the interval, using beat's properties
-  console.log("CHANGE");
-  console.log(e.target.value);
-  beat.speed = e.target.value;
+  beat.speed = sliderMinMax - e.target.value;
   clearInterval(beat.interval);
   beat.interval = setInterval(playbackSequence, beat.speed)
-
 }
 
 //event listeners!
-var play = document.querySelector('#play');
+
 play.addEventListener('click', playSequence);
 
-var slider = document.querySelector('#slider');
-slider.addEventListener('change', adjustBeatSpeed)
+slider.addEventListener('change', adjustBeatSpeed);
 
-var clear = document.querySelector('#clear');
-clear.addEventListener('click', function() {
-  clearInterval(beat.interval)
-});
+clear.addEventListener('click', () => { clearInterval(beat.interval) });
 
-var keys = document.querySelectorAll('.key');
-keys.forEach(function(eachKey) {
-  eachKey.addEventListener('transitionend', stopTransition);
-});
-window.addEventListener('keydown', playSoundServer);
+keys.forEach(eachKey => { eachKey.addEventListener('transitionend', stopTransition) });
+
+window.addEventListener('keydown', e => { playSound(e.keyCode) });
